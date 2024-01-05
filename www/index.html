@@ -1,0 +1,41 @@
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Accession Number Extractor</title>
+      <script src="javascript/wasm_exec.js"></script>
+      <script src="javascript/index.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/index.css" />
+  </head>
+
+  <body>
+      <div class="container">
+	  <header>
+	      <h1>Accession Number Extractor</h1>
+	  </header>
+	  <main>
+	      <form class="form">
+		  <div id="query" class="form-group">
+		      <label for="raw">Enter a...</label>
+		      <textarea id="raw" name="raw" class="form-control" aria-describedby="description"></textarea>
+		      
+		      <small id="description">...</small>
+		  </div>
+		  
+		  <button id="button" onclick="parse(); return false;" disabled class="btn btn-primary" type="submit">Loading...</button>
+	      </form>
+	      <div id="result"></div>
+	  </main>
+	  
+	  <footer>
+	      <p>This webpage demonstrates the </p>
+	      
+	      <ul>
+		  <li><a href="#">sfomuseum/accessionnumbers</a></li>		  
+		  <li><a href="#">sfomuseum/go-accession-numbers</a></li>
+		  <li><a href="#">sfomuseum/go-accession-numbers-wasm</a></li>
+	      </ul>
+	  </footer>
+      </div>
+  </body>
+</html>
