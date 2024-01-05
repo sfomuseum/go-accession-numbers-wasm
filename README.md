@@ -184,13 +184,13 @@ $> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
 
 ### WebComponents
 
-This package also provides a `extract-accession-numbers` WebComponent that create an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example:
+This package also provides a `extract-accession-numbers` WebComponent that create an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example, the following markup will create a form and code that will parse text and look for [accession numbers matching the definition defined by SFO Museum](https://github.com/sfomuseum/accession-numbers/blob/main/data/sfomuseum.org.json). 
 
 ```
 <extract-accession-numbers data-organizations="https://sfomuseum.org/" />
 ```
 
-This will create a form and code that will parse text and look for [accession numbers matching the definition defined by SFO Museum](https://github.com/sfomuseum/accession-numbers/blob/main/data/sfomuseum.org.json). Because you will almost certainly want to assign custom styles to the Web Component let me save you the trouble and show you how that's done [using an HTML `template` element](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_templates_and_slots):
+Because you will almost certainly want to assign custom styles to the Web Component let me save you the trouble and show you how that's done [using an HTML `template` element](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_templates_and_slots):
 
 ```
 <template id="extract-accession-numbers-styles">
@@ -210,6 +210,8 @@ $> go run cmd/server/main.go
 ```
 
 And the open `http://localhost:8080` in your web browser. You should see a web page like this:
+
+![](docs/images/server.png)
 
 ## See also
 
