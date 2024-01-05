@@ -6,6 +6,7 @@ wasip:
 
 wasm:
 	GOOS=js GOARCH=wasm go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o www/wasm/extract.wasm cmd/extract/main.go
+	GOOS=js GOARCH=wasm go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o www/wasm/definitions.wasm cmd/definitions/main.go
 
 server:
 	go run -mod $(GOMOD) cmd/server/main.go

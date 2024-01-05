@@ -18,11 +18,16 @@
 		  <div id="query" class="form-group">
 		      <label for="raw">Enter a...</label>
 		      <textarea id="raw" name="raw" class="form-control" aria-describedby="description"></textarea>
-		      
 		      <small id="description">...</small>
 		  </div>
+
+		  <div id="definitions" class="form-group">
+		      <select class="form-select" id="definitions-select" multiple>
+			  <option></option>
+		      </select>
+		  </div>
 		  
-		  <button id="button" onclick="parse(); return false;" disabled class="btn btn-primary" type="submit">Loading...</button>
+		  <button id="button" disabled class="btn btn-primary" type="submit">Loading...</button>
 	      </form>
 	      <div id="result"></div>
 	  </main>
