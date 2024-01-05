@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/fs"
-	
+
 	"github.com/sfomuseum/go-accession-numbers"
 )
 
@@ -22,10 +22,10 @@ func LoadDefinitions() ([]*accessionnumbers.Definition, error) {
 			return err
 		}
 
-		if d.IsDir(){
+		if d.IsDir() {
 			return nil
 		}
-		
+
 		r, err := FS.Open(path)
 
 		if err != nil {

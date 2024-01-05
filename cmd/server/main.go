@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"log"
-	
+
 	"github.com/sfomuseum/go-accession-numbers-wasm/www"
-	"github.com/sfomuseum/go-http-wasm/v2/server"		
+	"github.com/sfomuseum/go-http-wasm/v2/server"
 )
 
 func main() {

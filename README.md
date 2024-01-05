@@ -2,7 +2,7 @@
 
 ## Example
 
-### Javascript
+### Javascript (WASM)
 
 ```
 $> make wasm
@@ -76,6 +76,68 @@ To use it you would do something like this:
 
 ```
 accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp => { console.log(rsp); });
+```
+
+### WASI (p1)
+
+```
+$> make wasip
+GOARCH=wasm GOOS=wasip1 go build -mod vendor -ldflags="-s -w" -o www/wasip/extract.wasm ./cmd/extract-wasi/main.go
+GOARCH=wasm GOOS=wasip1 go build -mod vendor -ldflags="-s -w" -o www/wasip/definitions.wasm ./cmd/definitions-wasi/main.go
+```
+
+For example:
+
+```
+$> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
+"National Air and Space Museum"
+"Smithsonian American Art Museum and Renwick Gallery"
+"National Museum of American History"
+"Baltimore Museum of Art"
+"Art Institute of Chicago"
+"Minneapolis Art Museum"
+"British Museum"
+"National Museum of China"
+"Chrysler Museum of Art"
+"Cleveland Museum of Art"
+"Cooper Hewitt Smithsonian National Design Museum"
+"Dallas Museum of Art"
+"Denver Museum of Nature & Science"
+"Getty Center"
+"Ingenium"
+"21st Century Museum of Contemporary Art, Kanazawa"
+"Musée du Louvre"
+"Milwaukee Art Museum"
+"Musée National d'Art Moderne (Centre Pompidou)"
+"Metropolitan Museum of Art"
+"Museum of Fine Arts Boston"
+"Museum of Modern Art"
+"Musée d'Orsay"
+"Vatican Museums"
+"Museo del Prado"
+"Museo Reina Sofía"
+"National Museum of Anthropology"
+"National Museum of Korea"
+"National Gallery"
+"National Gallery Singapore"
+"Smithsonian National Museum of Natural History"
+"National Gallery of Art"
+"National Museum of African American History and Culture"
+"Georgia O'Keeffe Museum"
+"Rijksmuseum"
+"State Russian Museum"
+"Seattle Art Museum"
+"San Francisco Museum of Modern Art"
+"SFO Museum"
+"Saint Louis Art Museum"
+"National Gallery of Denmark"
+"Tate Modern"
+"Museum of New Zealand Te Papa Tongarewa"
+"The Broad Museum"
+"Victoria and Albert Museum"
+"Virginia Museum of Fine Arts"
+"Walker Art Center"
+"Whitney Museum of American Art"
 ```
 
 ### WebComponents

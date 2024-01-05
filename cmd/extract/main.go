@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"syscall/js"
 	"strings"
-	
+	"syscall/js"
+
 	"github.com/sfomuseum/go-accession-numbers"
 )
 
@@ -25,15 +25,15 @@ func ExtractFunc() js.Func {
 			var defs []*accessionnumbers.Definition
 
 			r := strings.NewReader(enc_defs)
-			
+
 			dec := json.NewDecoder(r)
-			err:= dec.Decode(&defs)
+			err := dec.Decode(&defs)
 
 			if err != nil {
 				reject.Invoke(fmt.Printf("Failed to decode definitions, %v\n", err))
 				return nil
 			}
-			
+
 			matches, err := accessionnumbers.ExtractFromText(text, defs...)
 
 			if err != nil {
@@ -60,10 +60,10 @@ func ExtractFunc() js.Func {
 func main() {
 
 	func_name := "accession_numbers_extract"
-	
+
 	extract_func := ExtractFunc()
 	defer extract_func.Release()
-	
+
 	js.Global().Set(func_name, extract_func)
 
 	c := make(chan struct{}, 0)
