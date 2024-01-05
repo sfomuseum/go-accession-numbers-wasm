@@ -93,6 +93,8 @@ accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp =>
 });
 ```
 
+_Note: This code depends on the `wasm_exec.js` and `sfomuseum.wasm.js` JavaScript packages both of which are available in the [sfomuseum/go-http-wasm](https://github.com/sfomuseum/go-http-wasm/tree/main/static/javascript) repository._
+
 ### WASI (p1)
 
 ```
