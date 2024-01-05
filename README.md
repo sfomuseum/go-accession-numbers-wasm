@@ -2,7 +2,7 @@
 
 ## Example
 
-### Javascript (WASM)
+### WASM (JavaScript)
 
 ```
 $> make wasm
@@ -183,6 +183,8 @@ $> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
 ```
 
 ### WebComponents
+
+This package also provides a `extract-accession-numbers` WebComponent that create an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example:
 
 ```
 <template id="extract-accession-numbers-styles">
