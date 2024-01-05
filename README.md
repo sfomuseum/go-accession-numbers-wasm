@@ -86,7 +86,49 @@ GOARCH=wasm GOOS=wasip1 go build -mod vendor -ldflags="-s -w" -o www/wasip/extra
 GOARCH=wasm GOOS=wasip1 go build -mod vendor -ldflags="-s -w" -o www/wasip/definitions.wasm ./cmd/definitions-wasi/main.go
 ```
 
+_Note: As of this writing the `www/wasip/extract.wasm` binary has a different interface than that of the JavaScript `extract.wasm` binary. Specifically, the former loads and uses all the possible accession number definitions by default and it is not possible (yet) to pass a custom list of definitions to use._
+
 For example:
+
+```
+$> wasmtime www/wasip/extract.wasm 'Hello world 2015.166.1155' | jq
+[
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://americanart.si.edu/"
+  },
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://americanhistory.si.edu/"
+  },
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://artbma.org"
+  },
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://www.artic.edu"
+  },
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://new.artsmia.org"
+  },
+  {
+    "accession_number": "world 2015",
+    "organization": "https://www.britishmuseum.org"
+  },
+  {
+    "accession_number": "2015.166.1155",
+    "organization": "https://chrysler.org"
+  },
+  {
+    "accession_number": "2015.166.",
+    "organization": "https://www.clevelandart.org"
+  },
+  ... and so on
+```
+
+Or:
 
 ```
 $> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
