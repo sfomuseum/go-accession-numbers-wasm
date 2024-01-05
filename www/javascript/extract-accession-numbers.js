@@ -12,8 +12,8 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	    sfomuseum.wasm.fetch("/wasm/extract.wasm").then(rsp => {
 		
 		accession_numbers_definitions().then(rsp => {
-
-		    var defs = JSON.parse(rsp);
+		    
+		    const defs = JSON.parse(rsp);
 		    
 		    _self.definitions = defs;
 		    _self.lookup = {};
@@ -28,20 +28,18 @@ class ExtractAccessionNumbersElement extends HTMLElement {
     }
 
     draw() {
-	
-	const shadow = this.attachShadow({ mode: "open" });
 
-	var wrapper = document.createElement("div");
+	const wrapper = document.createElement("div");
 	wrapper.appendChild(this.form_el());
 	wrapper.appendChild(this.results_el());	
 
+	const shadow = this.attachShadow({ mode: "open" });	
 	shadow.appendChild(wrapper);	
-
     }
 
     form_el() {
 
-	var form = document.createElement("form");
+	const form = document.createElement("form");
 	form.setAttribute("class", "form");
 	
 	form.appendChild(this.query_el());
@@ -53,11 +51,11 @@ class ExtractAccessionNumbersElement extends HTMLElement {
     
     query_el() {
 
-	var label = document.createElement("label");
+	const label = document.createElement("label");
 	label.setAttribute("for", "raw");
-	label.appendChild(document.createTextNode("Enter..."));
+	label.appendChild(document.createTextNode("Enter the text you want to extract accession numbers from"));
 
-	var textarea = document.createElement("textarea");
+	const textarea = document.createElement("textarea");
 	textarea.setAttribute("id", "raw");
 	textarea.setAttribute("name", "raw");
 	textarea.setAttribute("class", "form-control");
@@ -74,12 +72,12 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
     select_el() {
 
-	var select = document.createElement("select");
+	const select = document.createElement("select");
 	select.setAttribute("class", "form-select");
 	select.setAttribute("id", "definitions-select");
 	select.setAttribute("multiple", "multiple");
 
-	var count_defs = this.definitions.length;
+	const count_defs = this.definitions.length;
 	
 	for (var idx=0; idx < count_defs; idx++){
 	    
@@ -93,7 +91,7 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	    select.appendChild(opt);
 	}
 	
-	var wrapper = document.createElement("div");
+	const wrapper = document.createElement("div");
 	wrapper.setAttribute("class", "form-group");
 
 	wrapper.appendChild(select);
@@ -102,9 +100,8 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
     button_el() {
 
-	var btn = document.createElement("button");
+	const btn = document.createElement("button");
 	btn.setAttribute("id", "button");
-	// btn.setAttribute("disabled", "disabled");
 	btn.setAttribute("type", "submit");
 	btn.setAttribute("class", "btn btn-primary");
 
@@ -122,53 +119,64 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
     results_el() {
 
-	var div = document.createElement("div");
+	const div = document.createElement("div");
 	div.setAttribute("id", "result");
 	return div;
     }
 
     async parse() {
 
-	var raw_el = this.shadowRoot.getElementById("raw");	
-	var text = raw_el.value;
+	// Clear any previous feedback
+	
+	const result_el = this.shadowRoot.getElementById("result");
+	result_el.style.display = "none";
+	result_el.innerHTML = "";
+
+	// Ensure there is text to parse
+	
+	const raw_el = this.shadowRoot.getElementById("raw");	
+	const text = raw_el.value;
 
 	if (text == ""){
+	    result_el.innerText = "Missing text to extract accession numbers from";
+	    result_el.style.display = "block";
 	    return false;
 	}
 
-	var select = this.shadowRoot.getElementById("definitions-select");
+	// Derive definitions from organizations selected
 	
-	var defs_uris = this.get_select_values(select);
-	var count_uris = defs_uris.length;
+	const select = this.shadowRoot.getElementById("definitions-select");
+	
+	const defs_uris = this.get_select_values(select);
+	const count_uris = defs_uris.length;
 
 	if (count_uris == 0){
-	    console.log("NO DEFS");
+	    result_el.innerText = "Missing organization(s) to filter query by";
+	    result_el.style.display = "block";
 	    return false;
 	}
 
-	var defs = [];
+	const defs = [];
 
 	for (var i=0; i < count_uris; i++){
 
-	    var uri = defs_uris[i];
-	    var idx = this.lookup[uri];
+	    const uri = defs_uris[i];
+	    const idx = this.lookup[uri];
 
-	    var def = this.definitions[idx];
+	    const def = this.definitions[idx];
 
 	    if (! def){
-		console.log("NO DEF FOR ", uri, idx);
+		result_el.innerText = "Missing definition for '" + uri + "'";
+		result_el.style.display = "block";
 		return false;
 	    }
 
 	    defs.push(def);
 	}
 
-	var enc_defs = JSON.stringify(defs);
-	
-	var result_el = this.shadowRoot.getElementById("result");
-	result_el.style.display = "none";
-	
-	result_el.innerHTML = "";
+	const enc_defs = JSON.stringify(defs);
+
+	// Extract accession numbers
 	
 	accession_numbers_extract(text, enc_defs).then(rsp => {
 	    
@@ -176,12 +184,11 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 		var data = JSON.parse(rsp)
 	    } catch(e){
 		result_el.innerText = "Unable to parse your text: " + e;
-		
 		result_el.style.display = "block";
 		return;
 	    }
 	    
-	    var pre = document.createElement("pre");
+	    const pre = document.createElement("pre");
 	    pre.innerText = JSON.stringify(data, '', 2);
 	    
 	    result_el.appendChild(pre);
@@ -197,19 +204,23 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
     get_select_values(select) {
 	
-	var result = [];
-	
-	var options = select && select.options;
-	var opt;
-	
-	for (var i=0, iLen=options.length; i<iLen; i++) {
-	    opt = options[i];
+	var values = [];
 
-	    if (opt.selected) {
-		result.push(opt.value || opt.text);
+	if (select.options){
+
+	    const count_opts = select.options.length;
+	    
+	    for (var i=0; i < count_opts; i++){
+		
+		const opt = select.options[i];
+		
+		if (opt.selected) {
+		    values.push(opt.value || opt.text);
+		}
 	    }
 	}
-	return result;
+	
+	return values;
     }    
 }
 
