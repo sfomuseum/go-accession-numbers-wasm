@@ -236,6 +236,10 @@ And the open `http://localhost:8080` in your web browser. You should see a web p
 
 ![](docs/images/server.png)
 
+## Data
+
+Currently accession number definition files are cloned from the [sfomuseum/accession-numbers](https://github.com/sfomuseum/accession-numbers) repository in to the [data](data) directory. This is not ideal and is mostly to deal with some Go-language-isms. As of this writing I don't have a better alternative.
+
 ## See also
 
 * https://github.com/sfomuseum/accession-numbers
