@@ -182,9 +182,9 @@ $> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
 "Whitney Museum of American Art"
 ```
 
-### WebComponents
+### Web Components
 
-This package also provides a `extract-accession-numbers` WebComponent that create an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example, the following markup will create a form and code that will parse text and look for [accession numbers matching the definition defined by SFO Museum](https://github.com/sfomuseum/accession-numbers/blob/main/data/sfomuseum.org.json). 
+This package also provides a `extract-accession-numbers` Web Component that create an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example, the following markup will create a form and code that will parse text and look for [accession numbers matching the definition defined by SFO Museum](https://github.com/sfomuseum/accession-numbers/blob/main/data/sfomuseum.org.json). 
 
 ```
 <extract-accession-numbers data-organizations="https://sfomuseum.org/" />
@@ -202,7 +202,7 @@ Because you will almost certainly want to assign custom styles to the Web Compon
 <extract-accession-numbers data-organizations="https://sfomuseum.org/" />
 ```
 
-For a complete example of how to use the `extract-accession-numbers` WebComponent run the `cmd/server/main.go` program:
+For a complete example of how to use the `extract-accession-numbers` Web Component run the `cmd/server/main.go` program:
 
 ```
 $> go run cmd/server/main.go
