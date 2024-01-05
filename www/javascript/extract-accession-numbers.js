@@ -32,7 +32,7 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
 		    // Check to see if we are limiting lookup to specific organization
 		    
-		    const str_orgs = _self.getAttribute("data-organizations");
+		    const str_orgs = _self.getAttribute("organizations");
 
 		    if (str_orgs != ""){
 
@@ -57,13 +57,23 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
 		    _self.label = "Enter the text you want to extract accession numbers from below:";
 
-		    var custom_label = _self.getAttribute("data-label");
+		    var custom_label = _self.getAttribute("label");
 		    
 		    if ((custom_label) && (custom_label != "")){
 			_self.label = custom_label;
 		    }
 
 		    _self.draw();
+
+		    // Check to see if results should be broadcast back out to the parent window
+		    // https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+
+		    _self.post_messages = false;
+		    
+		    if (_self.hasAttribute("post-messages")){
+			_self.post_messages = true;
+		    }
+
 		});
 		
 	    })
@@ -168,7 +178,7 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	var _self = this;
 	
 	btn.onclick = function(){
-	    _self.parse();
+	    _self.extract();
 	    return false;
 	};
 	
@@ -182,8 +192,8 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	return div;
     }
 
-    async parse() {
-
+    async extract() {
+	
 	// Clear any previous feedback
 	
 	const result_el = this.shadowRoot.getElementById("result");
@@ -241,6 +251,8 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	const enc_defs = JSON.stringify(defs);
 
 	// Extract accession numbers
+
+	var _self = this;
 	
 	accession_numbers_extract(text, enc_defs).then(rsp => {
 	    
@@ -254,9 +266,19 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	    
 	    const pre = document.createElement("pre");
 	    pre.innerText = JSON.stringify(data, '', 2);
-	    
+
 	    result_el.appendChild(pre);
 	    result_el.style.display = "block";	    	    	
+
+	    if (_self.post_messages){
+		
+		var msg = {
+		    "text": text,
+		    "matches": data,
+		};
+
+		window.postMessage(msg);
+	    }
 	    
 	}).catch(err => {
 	    result_el.innerText = "There was a problem parsing your data:" + err;

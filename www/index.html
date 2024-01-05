@@ -35,11 +35,9 @@
    button { margin-top: 1rem; }
   &lt;/style&gt;
 &lt;/template&gt;
-&lt;extract-accession-numbers data-organizations="https://sfomuseum.org/" /&gt;</pre>
+&lt;extract-accession-numbers organizations="https://sfomuseum.org/" /&gt;</pre>
 	      	      
-	      <extract-accession-numbers data-organizations="https://sfomuseum.org/">
-		  <p>...and requires JavaScript be enabled to use.</p>
-	      </extract-accession-numbers>
+	      <extract-accession-numbers organizations="https://sfomuseum.org/" />
 
 	      <p>Note that this example (and those that follow) requires that these JavaScript packages be loaded in your web page:</p>
 
@@ -154,5 +152,19 @@ accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp =>
 
   <script src="javascript/webcomponent.js"></script>
   <script src="javascript/extract-accession-numbers.js"></script>  
-  <script src="javascript/foo.js"></script>  
+  <script src="javascript/foo.js"></script>
+  
+  <script type="text/javascript">
+   window.addEventListener("message", function(ev){
+
+       var whoami = location.protocol + "//" + location.host;
+       
+       if (ev.origin != whoami){
+	   return;
+       }
+       
+       console.log("MESSAGE", event.data);
+   }, false);
+   
+  </script>
 </html>

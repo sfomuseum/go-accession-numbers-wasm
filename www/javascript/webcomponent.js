@@ -25,8 +25,8 @@ window.addEventListener("load", function load(event){
 	wrapper.setAttribute("class", "custom");
 	
 	var component = document.createElement("extract-accession-numbers");
-	component.setAttribute("data-organizations", str_orgs);
-	component.setAttribute("data-label", "Enter text below to extract accession numbers from " + str_labels + " or " + last_label + " below:");	
+	component.setAttribute("organizations", str_orgs);
+	component.setAttribute("label", "Enter text below to extract accession numbers from " + str_labels + " or " + last_label + " below:");	
 
 	var label = document.createElement("h3");
 	label.appendChild(document.createTextNode("Custom "));
