@@ -30,10 +30,13 @@ accessionumbers = (function(){
 	init: function(){
 
 	    return new Promise((resolve, reject) => {
+	    
 		// fetch definitions.wasm and export 'accession_numbers_definitions' function
 		sfomuseum.wasm.fetch("/wasm/definitions.wasm").then(rsp => {
+		
 		    // fetch extract.wasm and export 'accession_numbers_extract' function
 		    sfomuseum.wasm.fetch("/wasm/extract.wasm").then(rsp => {
+		    
 			// load and cache definitions
 			accession_numbers_definitions().then(rsp => {
 			    definitions = rsp;
