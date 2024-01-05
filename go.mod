@@ -3,14 +3,14 @@ module github.com/sfomuseum/go-accession-numbers-wasm
 go 1.21.5
 
 require (
-	github.com/aaronland/go-http-bootstrap v0.4.0
-	github.com/aaronland/go-http-server v1.3.0
-	github.com/sfomuseum/go-accession-numbers v0.1.2
-	github.com/sfomuseum/go-http-wasm/v2 v2.0.2
+	github.com/sfomuseum/go-accession-numbers v0.2.0
+	github.com/sfomuseum/go-http-wasm/v2 v2.1.0
 )
 
 require (
+	github.com/aaronland/go-http-bootstrap v0.4.0 // indirect
 	github.com/aaronland/go-http-rewrite v1.1.0 // indirect
+	github.com/aaronland/go-http-server v1.3.0 // indirect
 	github.com/aaronland/go-http-static v0.0.3 // indirect
 	github.com/aaronland/go-log/v2 v2.0.0 // indirect
 	github.com/aaronland/go-roster v1.0.0 // indirect

@@ -25,12 +25,12 @@ github.com/jtacoma/uritemplates v1.0.0/go.mod h1:IhIICdE9OcvgUnGwTtJxgBQ+VrTrti5
 github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2/go.mod h1:0KeJpeMD6o+O4hW7qJOT7vyQPKrWmj26uf5wMc/IiIs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/sfomuseum/go-accession-numbers v0.1.2 h1:TDUJnm35XyNge4xsT8OKzsIlgQ6XPpg4VFWMBOKZwTo=
-github.com/sfomuseum/go-accession-numbers v0.1.2/go.mod h1:fR4sjv4yosLAuVv6/tQhHBQBh26FJ8KLLIJOm/xLk5E=
+github.com/sfomuseum/go-accession-numbers v0.2.0 h1:0z2N8zrcreISjSclMsz3KrW7mWnrbXpvB6RWwC84Ap0=
+github.com/sfomuseum/go-accession-numbers v0.2.0/go.mod h1:fR4sjv4yosLAuVv6/tQhHBQBh26FJ8KLLIJOm/xLk5E=
 github.com/sfomuseum/go-http-rollup v0.0.2 h1:cc0p0pppG1VJc6o3IUdkbocPnJedRzOqxWFNlz2mkYM=
 github.com/sfomuseum/go-http-rollup v0.0.2/go.mod h1:kxVTXkkaUsxVAMq3lFSNoILzKkv1L4ETuaQiDCQcBfI=
-github.com/sfomuseum/go-http-wasm/v2 v2.0.2 h1:r+r2n1eP1qqxxP7IlhhSmDrM4qGJuRmOfXVlhhZBZs4=
-github.com/sfomuseum/go-http-wasm/v2 v2.0.2/go.mod h1:42p9f6BmPN/s5wsCm9d+XMNJdkyTYlmVx/L3kXx+GAg=
+github.com/sfomuseum/go-http-wasm/v2 v2.1.0 h1:5VCl1a/pUsAq1+uF2pOR+vEuGRCeepRYKrgWtkUZ72c=
+github.com/sfomuseum/go-http-wasm/v2 v2.1.0/go.mod h1:0C7F2ZBhUNRTYchy6ANAZcJr9F+vDBsp0VJ2Mth/vzs=
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/stretchr/testify v1.7.2 h1:4jaiDzPyXQvSd7D0EjG45355tLlV3VOECpq10pLC+8s=
 github.com/stretchr/testify v1.7.2/go.mod h1:R6va5+xMeoiuVRoj+gSkQ7d3FALtqAAGI1FQKckRals=

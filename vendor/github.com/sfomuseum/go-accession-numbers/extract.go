@@ -41,6 +41,7 @@ func ExtractFromTextWithDefinition(text string, def *Definition) ([]*Match, erro
 		}
 
 		for _, m := range mp {
+			m.OrganizationURL = def.OrganizationURL
 			matches = append(matches, m)
 		}
 
@@ -61,6 +62,11 @@ func ExtractFromTextWithPattern(text string, pat *Pattern) ([]*Match, error) {
 	}
 
 	for _, str := range mp {
+
+		if str == "" {
+			continue
+		}
+
 		m := &Match{AccessionNumber: str}
 		matches = append(matches, m)
 	}

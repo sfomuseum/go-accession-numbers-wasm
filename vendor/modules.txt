@@ -30,15 +30,16 @@ github.com/aws/aws-lambda-go/lambdacontext
 # github.com/jtacoma/uritemplates v1.0.0
 ## explicit
 github.com/jtacoma/uritemplates
-# github.com/sfomuseum/go-accession-numbers v0.1.2
+# github.com/sfomuseum/go-accession-numbers v0.2.0
 ## explicit; go 1.21
 github.com/sfomuseum/go-accession-numbers
 # github.com/sfomuseum/go-http-rollup v0.0.2
 ## explicit; go 1.20
 github.com/sfomuseum/go-http-rollup
-# github.com/sfomuseum/go-http-wasm/v2 v2.0.2
+# github.com/sfomuseum/go-http-wasm/v2 v2.1.0
 ## explicit; go 1.18
 github.com/sfomuseum/go-http-wasm/v2
+github.com/sfomuseum/go-http-wasm/v2/server
 github.com/sfomuseum/go-http-wasm/v2/static
 # github.com/tdewolff/minify/v2 v2.12.4
 ## explicit; go 1.13
