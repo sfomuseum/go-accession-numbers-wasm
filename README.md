@@ -221,7 +221,7 @@ The `extract-accession-numbers` Web Component accepts the following attributes:
 
 | Name | Value | Notes |
 | --- | --- | --- |
-| organizations | A space-delimited list of URIs of the organizations whose accession numbers should be extracted from a text | If not present then all the organization definitions returned by the `accession_numbers_definition` WASM binary will be used. |
+| organizations | A space-delimited list of URIs of the organizations whose accession numbers should be extracted from a text | The URLs should match of the value of the `organization_url` property in the definitions published in [sfomuseum/accession-numbers](https://github.com/sfomuseum/accession-numbers) repository. If not present then all the organization definitions returned by the `accession_numbers_definition` WASM binary will be used. |
 | label | A custom label to appear over the `textarea` element where text to be parsed is entered | The default value is "Enter the text you want to extract accession numbers from below:" |
 | post-messages | | This attribute has no specific value. If present a data structure containing the text that was parsed and any matches will be broadcast out to the parent window using the [window.postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) API. This is a bit of an end-run around the security model for Web Components and the ShadowDOM so you should only use this if you know what you are doing. It is up to you to implement custom code to capture and process those messages. |
 
