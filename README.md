@@ -1,5 +1,7 @@
 # go-acccession-numbers-wasm
 
+WebAssembly binaries and Web Component definitions for extracting accession numbers from text.
+
 ## Example
 
 ### WASM (JavaScript)
@@ -15,6 +17,8 @@ And then load those binaries in your code. [For example](www/javascript/accessio
 ```
 accessionumbers = (function(){
 
+    // JSON-encoded list of accession number definitions
+    // https://github.com/sfomuseum/go-accession-numbers/blob/main/definition.go#L10
     var definitions = null;
     
     var self = {
@@ -41,6 +45,7 @@ accessionumbers = (function(){
 
 	extract: function(text){
 
+            // Definitions are cached, extract text		 
 	    if (definitions){
 
 		return new Promise((resolve, reject) => {
@@ -52,6 +57,7 @@ accessionumbers = (function(){
 		});
 	    }
 
+	    // Initialize WASM binaries and definitions cache, then extract text
 	    return new Promise((resolve, reject) => {
 		
 		self.init().then(rsp => {
