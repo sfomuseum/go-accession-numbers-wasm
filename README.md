@@ -202,7 +202,7 @@ $> wasmtime www/wasip/definitions.wasm | jq .[].organization_name
 This package also provides a `extract-accession-numbers` Web Component that creates an HTML `form` element for entering custom text and then uses the WASM binaries to extract accession numbers. For example, the following markup will create a form element and a register code that will parse text and look for [accession numbers matching the definition defined by SFO Museum](https://github.com/sfomuseum/accession-numbers/blob/main/data/sfomuseum.org.json). 
 
 ```
-<extract-accession-numbers data-organizations="https://sfomuseum.org/" />
+<extract-accession-numbers organizations="https://sfomuseum.org/" />
 ```
 
 Because you will almost certainly want to assign custom styles to the Web Component let me save you the trouble and show you how that's done [using an HTML `template` element](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_templates_and_slots):
