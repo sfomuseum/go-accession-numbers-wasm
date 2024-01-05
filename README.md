@@ -1,6 +1,10 @@
 # go-acccession-numbers-wasm
 
-WebAssembly binaries and Web Component elements for extracting accession numbers from text.
+WebAssembly binaries and Web Component elements for extracting accession numbers from text using the [sfomuseum/go-accession-numbers](https://github.com/sfomuseum/go-accession-numbers) package.
+
+## Background
+
+If you're not sure what this is all about have a look at the [sfomuseum/accession-numbers](https://github.com/sfomuseum/accession-numbers) repository and the [The Accession Numbers Project](https://millsfield.sfomuseum.org/blog/2021/12/30/accession-numbers/) blog post.
 
 ## Example
 
@@ -17,7 +21,7 @@ And then load those binaries in your code. [For example](www/javascript/accessio
 ```
 accessionumbers = (function(){
 
-    // JSON-encoded list of accession number definitions
+    // JSON-encoded list of accession number definitions as specified by:
     // https://github.com/sfomuseum/go-accession-numbers/blob/main/definition.go#L10
     var definitions = null;
     
@@ -26,9 +30,9 @@ accessionumbers = (function(){
 	init: function(){
 
 	    return new Promise((resolve, reject) => {
-		// fetch definitions.wasm
+		// fetch definitions.wasm and export 'accession_numbers_definitions' function
 		sfomuseum.wasm.fetch("/wasm/definitions.wasm").then(rsp => {
-		    // fetch extract.wasm
+		    // fetch extract.wasm and export 'accession_numbers_extract' function
 		    sfomuseum.wasm.fetch("/wasm/extract.wasm").then(rsp => {
 			// load and cache definitions
 			accession_numbers_definitions().then(rsp => {
@@ -81,7 +85,9 @@ accessionumbers = (function(){
 To use it you would do something like this:
 
 ```
-accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp => { console.log(rsp); });
+accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp => {
+	console.log(rsp);
+});
 ```
 
 ### WASI (p1)
@@ -231,3 +237,4 @@ And the open `http://localhost:8080` in your web browser. You should see a web p
 
 * https://github.com/sfomuseum/accession-numbers
 * https://github.com/sfomuseum/go-accession-numbers
+* https://millsfield.sfomuseum.org/blog/2021/12/30/accession-numbers/
