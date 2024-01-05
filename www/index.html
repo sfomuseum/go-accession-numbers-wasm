@@ -3,8 +3,6 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Accession Number Extractor</title>
-      <script src="javascript/wasm_exec.js"></script>
-      <script src="javascript/index.js"></script>
       <link rel="stylesheet" type="text/css" href="css/index.css" />
   </head>
 
@@ -14,6 +12,12 @@
 	      <h1>Accession Number Extractor</h1>
 	  </header>
 	  <main>
+
+	      <extract-accession-numbers>
+		  <p>This is a tedt</p>
+	      </extract-accession-numbers>
+
+	      <!--
 	      <form class="form">
 		  <div id="query" class="form-group">
 		      <label for="raw">Enter a...</label>
@@ -30,6 +34,8 @@
 		  <button id="button" disabled class="btn btn-primary" type="submit">Loading...</button>
 	      </form>
 	      <div id="result"></div>
+	      -->
+	      
 	  </main>
 	  
 	  <footer>
@@ -43,4 +49,9 @@
 	  </footer>
       </div>
   </body>
+
+  <script src="javascript/wasm_exec.js"></script>
+  <script src="javascript/index.js"></script>
+  <script src="javascript/extract-accession-numbers.js"></script>  
+  
 </html>

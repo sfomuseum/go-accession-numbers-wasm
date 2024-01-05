@@ -1,11 +1,15 @@
 window.addEventListener("load", function load(event){
 
+    return;
+    
     var definitions = [];
     var lookup = {};
 
     async function parse() {
 	
-	var raw_el = document.getElementById("raw");
+	// var raw_el = document.getElementById("raw");
+
+	var raw_el = this.shadowRoot.getElementById("raw");	
 	var text = raw_el.value;
 
 	if (text == ""){
