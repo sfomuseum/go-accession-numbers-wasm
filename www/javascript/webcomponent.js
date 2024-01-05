@@ -15,6 +15,8 @@ window.addEventListener("load", function load(event){
 	    var def = definitions[idx];
 	    labels.push(def.organization_name);
 	}
+
+	var last_label = labels.pop()
 	
 	var str_orgs = orgs.join(" ");
 	var str_labels = labels.join(", ");
@@ -24,12 +26,12 @@ window.addEventListener("load", function load(event){
 	
 	var component = document.createElement("extract-accession-numbers");
 	component.setAttribute("data-organizations", str_orgs);
-	component.setAttribute("data-label", "Enter text below to extract accession numbers from " + str_labels + " below");	
+	component.setAttribute("data-label", "Enter text below to extract accession numbers from " + str_labels + " or " + last_label + " below:");	
 
 	var label = document.createElement("h3");
 	label.appendChild(document.createTextNode("Custom "));
 	label.appendChild(document.createElement("code").appendChild(document.createTextNode("<extract-accession-numbers/>")));
-	label.appendChild(document.createTextNode(" Web Component for " + str_labels));
+	label.appendChild(document.createTextNode(" Web Component for " + str_labels + " and " + last_label));
 
 	var pre = document.createElement("pre");
 

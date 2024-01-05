@@ -18,13 +18,15 @@
 	  <header>
 	      <h1>Accession Number Extractor</h1>
 
-	      <p>This...</p>
+	      <p>This web page demonstrates the WebAssembly binaries for listing definitions provided by the <a href="#">Accession Numbers Project</a> and for using those definitions to extract accession numbers from arbitrary text. It also demonstrate how to use the <code>&lt;extract-accession-numbers/&gt;</code> Web Component to add forms for extracting accession numbers to web pages.</p>
 	  </header>
 	  <main id="main">
-
+	      
 	      <div class="sect">
 		  
 	      <h3>Custom <code>&lt;extract-accession-numbers/&gt;</code> Web Component for SFO Museum</h3>
+
+	      <p>The following markup will produce a <code>&lt;extract-accession-numbers/&gt;</code> Web Component for extracting SFO Museum accession numbers from arbitrary texts:</p>
 	      
 	      <pre>
 &lt;template id="extract-accession-numbers-styles"&gt;
@@ -37,7 +39,20 @@
 	      	      
 	      <extract-accession-numbers data-organizations="https://sfomuseum.org/">
 		  <p>...and requires JavaScript be enabled to use.</p>
-	      </extract-accession-numbers>		  
+	      </extract-accession-numbers>
+
+	      <p>Note that this example (and those that follow) requires that these JavaScript packages be loaded in your web page:</p>
+
+	      <pre>
+&lt;!-- <a href="https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/wasm_exec.js">https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/wasm_exec.js</a> --&gt;
+&lt;script src="javascript/wasm_exec.js"&gt;&lt;/script&gt;
+
+&lt;!-- <a href="https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/sfomuseum.wasm.js">https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/sfomuseum.wasm.js</a> --&gt;
+&lt;script src="javascript/sfomuseum.wasm.js"&gt;&lt;/script&gt;
+
+&lt;!-- <a href="https://github.com/sfomuseum/go-accession-numbers-wasm/blob/main/www/javascript/extract-accession-numbers.js">https://github.com/sfomuseum/go-accession-numbers-wasm/blob/main/www/javascript/extract-accession-numbers.js</a> --&gt;
+&lt;script src="javascript/extract-accession-numbers.js"&gt;&lt;/script&gt;</pre>
+
 	      </div>
 
 	      <div class="sect">
@@ -53,43 +68,91 @@
 
 	      <div id="custom" class="sect">
 	      </div>
-	      
-	      <!--
-	      <form class="form">
-		  <div id="query" class="form-group">
-		      <label for="raw">Enter a...</label>
-		      <textarea id="raw" name="raw" class="form-control" aria-describedby="description"></textarea>
-		      <small id="description">...</small>
-		  </div>
 
-		  <div id="definitions" class="form-group">
-		      <select class="form-select" id="definitions-select" multiple>
-			  <option></option>
-		      </select>
-		  </div>
+	      <div class="sect">
+
+		  <h3>JavaScript</h3>
+
+		  <p>Here is some example JavaScript code to load and use the <code>accession_numbers_definitions</code> and <code>accession_numbers_extract</code> WebAssembly functions:</h3>
 		  
-		  <button id="button" disabled class="btn btn-primary" type="submit">Loading...</button>
-	      </form>
-	      <div id="result"></div>
-	      -->
+		  <pre>
+accessionnumbers = (function(){
+
+    var definitions = null;
+    
+    var self = {
+
+	init: function(){
+	    return new Promise((resolve, reject) => {
+		// fetch definitions.wasm
+		sfomuseum.wasm.fetch("/wasm/definitions.wasm").then(rsp => {
+		    // fetch extract.wasm
+		    sfomuseum.wasm.fetch("/wasm/extract.wasm").then(rsp => {
+			// load and cache definitions
+			accession_numbers_definitions().then(rsp => {
+			    definitions = rsp;
+			    resolve();
+			});
+		    });
+		}).catch(err => {
+		    reject(err);
+		});
+	    });
+	},
+
+	extract: function(text){
+	    if (definitions){
+		return new Promise((resolve, reject) => {
+		    accession_numbers_extract(text, definitions).then(rsp => {
+			resolve(JSON.parse(rsp));
+		    });
+		});
+	    }
+	    return new Promise((resolve, reject) => {
+		self.init().then(rsp => {
+		    accession_numbers_extract(text, definitions).then(rsp => {
+			resolve(JSON.parse(rsp));
+		    });
+		}).catch(err => {
+		    reject(err)
+		});
+	    });
+	},
+
+    };
+    return self;
+})();</pre>
+
+		  <p>To use it you would do something like this:</p>
+
+		  <pre>
+accessionnumbers.extract("Text with accession number 2015.166.1155").then(rsp => { console.log(rsp); });</pre>
+		  
+	      <p>Note that this code requires that these JavaScript packages be loaded in order to run:</p>
+
+	      <pre>
+&lt;!-- <a href="https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/wasm_exec.js">https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/wasm_exec.js</a> --&gt;
+&lt;script src="javascript/wasm_exec.js"&gt;&lt;/script&gt;
+
+&lt;!-- <a href="https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/sfomuseum.wasm.js">https://github.com/sfomuseum/go-http-wasm/blob/main/static/javascript/sfomuseum.wasm.js</a> --&gt;
+&lt;script src="javascript/sfomuseum.wasm.js"&gt;&lt;/script&gt;</pre>
+		  
+	      </div>
 	      
 	  </main>
 	  
 	  <footer>
-	      <p>This webpage demonstrates the </p>
 	      
 	      <ul>
-		  <li><a href="#">sfomuseum/accessionnumbers</a></li>		  
-		  <li><a href="#">sfomuseum/go-accession-numbers</a></li>
-		  <li><a href="#">sfomuseum/go-accession-numbers-wasm</a></li>
+		  <li><a href="https://github.com/sfomuseum/accession-numbers">sfomuseum/accession-numbers</a></li>		  
+		  <li><a href="https://github.com/sfomuseum/go-accession-numbers">sfomuseum/go-accession-numbers</a></li>
+		  <li><a href="https://github.com/sfomuseum/go-accession-numbers-wasm">sfomuseum/go-accession-numbers-wasm</a></li>
 	      </ul>
 	  </footer>
       </div>
   </body>
 
-  <!-- <script src="javascript/wasm_exec.js"></script>-- >
-  <!-- <script src="javascript/index.js"></script> -->
   <script src="javascript/webcomponent.js"></script>
   <script src="javascript/extract-accession-numbers.js"></script>  
-  
+  <script src="javascript/foo.js"></script>  
 </html>
