@@ -2,6 +2,24 @@ body {
 	margin: 1rem;
 }
 
+pre {
+	border: solid thin;
+	background-color: #ccc;
+	margin-bottom: 2rem !important;
+	padding: 2rem;
+	font-family: monospace !important;
+}
+
+/*
+pre:before {
+	content:"Here is the markup...";
+	display:block;
+	font-size: small;
+	margin-bottom: 1rem;
+	color: red;
+}
+ */
+
 footer {
 	padding-top:1rem;
 	border-top: solid thin;
@@ -16,6 +34,31 @@ footer {
 	padding:1rem;
 }
 
+#custom {
+	display:none;
+}
+
+.custom {
+	border: solid thin;
+	margin-bottom: 2rem;
+	padding: 1rem;
+}
+
+.form-group label {
+	margin-bottom: 1rem;
+	font-size: small;
+}
+
 .italic {
 	font-style:italic;
+}
+
+.sect {
+	margin-bottom: 2rem;
+	padding-top: 2rem;
+	border-top: 2px solid #ccc;
+}
+
+button {
+	margin-top: 1rem !important;
 }

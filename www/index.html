@@ -7,16 +7,53 @@
   </head>
 
   <body>
+      <template id="extract-accession-numbers-styles">
+	  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	  <style type="text/css">
+	   button { margin-top: 1rem; }
+	  </style>
+      </template>
+      
       <div class="container">
 	  <header>
 	      <h1>Accession Number Extractor</h1>
-	  </header>
-	  <main>
 
-	      <extract-accession-numbers>
+	      <p>This...</p>
+	  </header>
+	  <main id="main">
+
+	      <div class="sect">
+		  
+	      <h3>Custom <code>&lt;extract-accession-numbers/&gt;</code> Web Component for SFO Museum</h3>
+	      
+	      <pre>
+&lt;template id="extract-accession-numbers-styles"&gt;
+  &lt;link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" /&gt;
+  &lt;style type="text/css"&gt;
+   button { margin-top: 1rem; }
+  &lt;/style&gt;
+&lt;/template&gt;
+&lt;extract-accession-numbers data-organizations="https://sfomuseum.org/" /&gt;</pre>
+	      	      
+	      <extract-accession-numbers data-organizations="https://sfomuseum.org/">
 		  <p>...and requires JavaScript be enabled to use.</p>
 	      </extract-accession-numbers>		  
+	      </div>
 
+	      <div class="sect">
+		  <h3>Create a custom <code>&lt;extract-accession-numbers/&gt;</code> Web Component for one or more organizations</h3>
+		  <form class="form">
+		      <div class="form-group">
+			  <label for="choose-orgs">Select one or more organizations from the list below that you would like to create a custom <code>&lt;extract-accession-numbers/&gt;</code> Web Component for and then press the <code>Create</code></label>
+			  <select id="choose-orgs" class="form-select" multiple></select>
+		      </div>
+		      <button id="choose-orgs-button" type="submit" class="btn btn-primary" disabled>Loading...</button>
+		  </form>
+	      </div>
+
+	      <div id="custom" class="sect">
+	      </div>
+	      
 	      <!--
 	      <form class="form">
 		  <div id="query" class="form-group">
@@ -50,8 +87,9 @@
       </div>
   </body>
 
-  <script src="javascript/wasm_exec.js"></script>
+  <!-- <script src="javascript/wasm_exec.js"></script>-- >
   <!-- <script src="javascript/index.js"></script> -->
+  <script src="javascript/webcomponent.js"></script>
   <script src="javascript/extract-accession-numbers.js"></script>  
   
 </html>

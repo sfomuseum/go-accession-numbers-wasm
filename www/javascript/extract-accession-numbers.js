@@ -14,10 +14,55 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 		accession_numbers_definitions().then(rsp => {
 		    
 		    const defs = JSON.parse(rsp);
-		    
+
 		    _self.definitions = defs;
 		    _self.lookup = {};
+		    _self.orgs = [];
+
+		    // Build URI to (definitions) index table
 		    
+		    const count_defs = defs.length;
+
+		    for (var idx=0; idx < count_defs; idx++){
+
+			var org = defs[idx];
+			var url = org.organization_url;
+			_self.lookup[url] = idx;
+		    }
+
+		    // Check to see if we are limiting lookup to specific organization
+		    
+		    const str_orgs = _self.getAttribute("data-organizations");
+
+		    if (str_orgs != ""){
+
+			const orgs = str_orgs.split(" ");
+			var count_orgs = orgs.length;
+
+			for (var i=0; i < count_orgs; i++){
+			    
+			    var url = orgs[i];
+
+			    if (! url in _self.lookup){
+				console.log("Invalid organization URL", url);
+				return false;
+			    }
+
+			    _self.orgs.push(url);
+			}
+
+		    }
+
+		    // Labels
+
+		    _self.label = "Enter the text you want to extract accession numbers from below:";
+
+		    var custom_label = _self.getAttribute("data-label");
+		    
+		    if ((custom_label) && (custom_label != "")){
+			_self.label = custom_label;
+		    }
+
 		    _self.draw();
 		});
 		
@@ -29,11 +74,21 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
     draw() {
 
+	const shadow = this.attachShadow({ mode: "open" });
+	
+	// https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_templates_and_slots
+	
+	var styles = document.getElementById("extract-accession-numbers-styles");
+
+	if (styles){
+	    let styles_content = styles.content;
+	    shadow.appendChild(styles_content.cloneNode(true));
+	}
+
 	const wrapper = document.createElement("div");
 	wrapper.appendChild(this.form_el());
 	wrapper.appendChild(this.results_el());	
-
-	const shadow = this.attachShadow({ mode: "open" });	
+	
 	shadow.appendChild(wrapper);	
     }
 
@@ -43,7 +98,11 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	form.setAttribute("class", "form");
 	
 	form.appendChild(this.query_el());
-	form.appendChild(this.select_el());	
+
+	if (this.orgs.length == 0){
+	    form.appendChild(this.select_el());
+	}
+	
 	form.appendChild(this.button_el());
 	
 	return form;
@@ -53,7 +112,7 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 
 	const label = document.createElement("label");
 	label.setAttribute("for", "raw");
-	label.appendChild(document.createTextNode("Enter the text you want to extract accession numbers from"));
+	label.appendChild(document.createTextNode(this.label));
 
 	const textarea = document.createElement("textarea");
 	textarea.setAttribute("id", "raw");
@@ -82,7 +141,6 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	for (var idx=0; idx < count_defs; idx++){
 	    
 	    var def = this.definitions[idx];
-	    this.lookup[ def.organization_url ] = idx;
 	    
 	    var opt = document.createElement("option");
 	    opt.setAttribute("value", def.organization_url);
@@ -144,23 +202,29 @@ class ExtractAccessionNumbersElement extends HTMLElement {
 	}
 
 	// Derive definitions from organizations selected
-	
-	const select = this.shadowRoot.getElementById("definitions-select");
-	
-	const defs_uris = this.get_select_values(select);
-	const count_uris = defs_uris.length;
 
+	var org_uris = this.orgs;
+	var count_uris = org_uris.length;
+	
 	if (count_uris == 0){
-	    result_el.innerText = "Missing organization(s) to filter query by";
-	    result_el.style.display = "block";
-	    return false;
+	    
+	    const select = this.shadowRoot.getElementById("definitions-select");
+	    
+	    org_uris = this.get_select_values(select);
+	    count_uris = org_uris.length;
+	    
+	    if (count_uris == 0){
+		result_el.innerText = "Missing organization(s) to filter query by";
+		result_el.style.display = "block";
+		return false;
+	    }
 	}
-
+	
 	const defs = [];
 
 	for (var i=0; i < count_uris; i++){
 
-	    const uri = defs_uris[i];
+	    const uri = org_uris[i];
 	    const idx = this.lookup[uri];
 
 	    const def = this.definitions[idx];
